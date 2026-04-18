@@ -1,7 +1,5 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import { useState, useEffect } from "react";
 import { useVotes, resetVotes, navigateToLevel, useCurrentLevel } from "./lib/use-votes";
 import { workshopTopics, Topic } from "./lib/workshop-data";
@@ -9,36 +7,53 @@ import { QRCodeSVG } from "qrcode.react";
 
 const SESSION_ID = "future-2026";
 
-function VoteBar({ topic, count, total, index }: { topic: Topic; count: number; total: number; index: number }) {
+function TopicCard({ topic, count, total, index, onClick }: {
+  topic: Topic;
+  count: number;
+  total: number;
+  index: number;
+  onClick: () => void;
+}) {
   const percentage = total > 0 ? (count / total) * 100 : 0;
 
   return (
-    <div className="animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-3">
-          <span className="text-3xl">{topic.icon}</span>
-          <div>
-            <h3 className="text-xl font-bold text-text-primary">{topic.title}</h3>
-            <p className="text-sm text-text-muted">{topic.subtitle}</p>
-          </div>
-        </div>
-        <div className="text-right">
-          <span className="text-3xl font-bold animate-count" key={count} style={{ color: topic.color }}>
-            {count}
-          </span>
-          <span className="text-text-muted text-sm ml-1">hlasů</span>
-        </div>
-      </div>
-      <div className="w-full h-4 bg-bg-secondary rounded-full overflow-hidden border border-border">
+    <button
+      onClick={onClick}
+      className="animate-slide-up w-full text-left rounded-2xl p-6 border-2 transition-all hover:scale-[1.02] active:scale-[0.98] card-shadow hover:card-shadow-hover cursor-pointer"
+      style={{
+        animationDelay: `${index * 0.1}s`,
+        background: topic.bgColor,
+        borderColor: topic.borderColor,
+      }}
+    >
+      <div className="flex items-start justify-between mb-4">
+        <span className="text-4xl animate-float" style={{ animationDelay: `${index * 0.5}s` }}>{topic.icon}</span>
         <div
-          className="vote-bar h-full rounded-full"
-          style={{
-            width: `${percentage}%`,
-            background: `linear-gradient(90deg, ${topic.color}, ${topic.color}88)`,
-          }}
-        />
+          className="px-3 py-1 rounded-full text-sm font-bold text-white"
+          style={{ background: topic.color }}
+        >
+          {percentage.toFixed(0)}%
+        </div>
       </div>
-    </div>
+
+      <h3 className="text-xl font-bold text-text-primary mb-1">{topic.title}</h3>
+      <p className="text-sm text-text-muted mb-4">{topic.subtitle}</p>
+
+      <div className="flex items-center gap-3">
+        <div className="flex-1 h-3 rounded-full overflow-hidden" style={{ background: `${topic.borderColor}88` }}>
+          <div
+            className="vote-bar h-full rounded-full"
+            style={{
+              width: `${percentage}%`,
+              background: topic.color,
+            }}
+          />
+        </div>
+        <span className="text-lg font-bold animate-count" key={count} style={{ color: topic.color }}>
+          {count}
+        </span>
+      </div>
+    </button>
   );
 }
 
@@ -74,33 +89,36 @@ export default function PresenterDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-bg-primary flex flex-col">
+    <div className="min-h-screen bg-bg-primary">
       {/* Header */}
-      <header className="px-8 py-6 border-b border-border flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-text-primary">
-            Jak reálně používáme AI
-          </h1>
-          <p className="text-text-muted text-sm">
-            Denisa & Matyáš — CzechCrunch Future 2026
-          </p>
-        </div>
+      <header className="px-8 py-5 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-bg-secondary border border-border">
-            <div className="w-2 h-2 rounded-full bg-accent-green" style={{ animation: "pulse-glow 2s infinite" }} />
-            <span className="text-text-secondary text-sm font-medium">{totalVotes} hlasů</span>
-          </div>
           {selectedTopic && (
             <button
               onClick={handleBack}
-              className="px-4 py-2 rounded-lg bg-bg-secondary border border-border text-text-secondary hover:text-text-primary hover:bg-bg-card-hover transition-colors text-sm"
+              className="w-10 h-10 rounded-xl bg-white border border-border flex items-center justify-center card-shadow hover:card-shadow-hover transition-all text-text-muted hover:text-text-primary"
             >
-              ← Zpět
+              ←
             </button>
           )}
+          <div>
+            <h1 className="text-2xl font-bold text-text-primary">
+              Jak reálně používáme AI
+            </h1>
+            <p className="text-text-muted text-sm">
+              Denisa & Matyáš — CzechCrunch Future 2026
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-border card-shadow">
+            <div className="w-2 h-2 rounded-full bg-accent-green" style={{ animation: "pulse-glow 2s infinite" }} />
+            <span className="text-text-secondary text-sm font-semibold">{totalVotes} hlasů</span>
+          </div>
           <button
             onClick={handleReset}
-            className="px-4 py-2 rounded-lg bg-bg-secondary border border-border text-text-muted hover:text-accent-red hover:border-accent-red/30 transition-colors text-sm"
+            className="px-4 py-2.5 rounded-xl bg-white border border-border text-text-muted hover:text-accent-red hover:border-red-200 transition-all text-sm card-shadow"
           >
             Reset
           </button>
@@ -108,47 +126,46 @@ export default function PresenterDashboard() {
       </header>
 
       {/* Main content */}
-      <div className="flex-1 flex">
-        {/* Voting results */}
-        <div className="flex-1 p-8 flex flex-col justify-center">
+      <div className="flex gap-6 px-8 pb-8" style={{ height: "calc(100vh - 80px)" }}>
+        {/* Left: voting cards */}
+        <div className="flex-1 flex flex-col justify-center">
           {selectedTopic && (
-            <div className="mb-8">
-              <span className="text-4xl mb-2 block">{selectedTopic.icon}</span>
-              <h2 className="text-3xl font-bold text-text-primary">{selectedTopic.title}</h2>
-              <p className="text-text-muted mt-1">{selectedTopic.subtitle}</p>
+            <div className="mb-6">
+              <div className="flex items-center gap-3 mb-1">
+                <span className="text-3xl">{selectedTopic.icon}</span>
+                <h2 className="text-3xl font-bold text-text-primary">{selectedTopic.title}</h2>
+              </div>
+              <p className="text-text-muted ml-12">{selectedTopic.subtitle}</p>
             </div>
           )}
 
-          <div className="space-y-8 max-w-3xl">
+          <div className="grid grid-cols-3 gap-5">
             {currentTopics.map((topic, i) => (
-              <button
+              <TopicCard
                 key={topic.id}
+                topic={topic}
+                count={votes[topic.id] || 0}
+                total={totalVotes}
+                index={i}
                 onClick={() => handleSelectTopic(topic)}
-                className="w-full text-left cursor-pointer hover:opacity-90 transition-opacity"
-                disabled={!topic.subtopics || topic.subtopics.length === 0}
-              >
-                <VoteBar
-                  topic={topic}
-                  count={votes[topic.id] || 0}
-                  total={totalVotes}
-                  index={i}
-                />
-              </button>
+              />
             ))}
           </div>
         </div>
 
-        {/* QR Code sidebar */}
-        <div className="w-80 border-l border-border flex flex-col items-center justify-center p-8 bg-bg-secondary">
-          <p className="text-text-muted text-sm font-medium mb-4 uppercase tracking-wider">Hlasujte</p>
-          {voteUrl && (
-            <div className="bg-white p-4 rounded-2xl">
-              <QRCodeSVG value={voteUrl} size={200} />
-            </div>
-          )}
-          <p className="text-text-muted text-xs mt-4 text-center">
-            Naskenujte QR kód<br />a vyberte téma
-          </p>
+        {/* Right: QR sidebar */}
+        <div className="w-72 flex flex-col items-center justify-center">
+          <div className="bg-white rounded-2xl border border-border p-6 card-shadow flex flex-col items-center">
+            <p className="text-text-muted text-xs font-semibold uppercase tracking-wider mb-4">Hlasujte zde</p>
+            {voteUrl && (
+              <div className="bg-bg-primary p-3 rounded-xl">
+                <QRCodeSVG value={voteUrl} size={180} />
+              </div>
+            )}
+            <p className="text-text-muted text-xs mt-4 text-center leading-relaxed">
+              Naskenujte QR kód<br />a vyberte téma
+            </p>
+          </div>
         </div>
       </div>
     </div>
