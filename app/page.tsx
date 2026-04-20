@@ -232,6 +232,7 @@ function Editable({
   style,
   as: Tag = "span",
   placeholder,
+  multiline = false,
 }: {
   value: string;
   editable: boolean;
@@ -240,6 +241,7 @@ function Editable({
   style?: React.CSSProperties;
   as?: keyof React.JSX.IntrinsicElements;
   placeholder?: string;
+  multiline?: boolean;
 }) {
   const ref = useRef<HTMLElement | null>(null);
 
@@ -255,19 +257,26 @@ function Editable({
         outlineOffset: "4px",
         borderRadius: "4px",
         cursor: "text",
+        whiteSpace: multiline ? "pre-wrap" : undefined,
         ...style,
       }
-    : style || {};
+    : { whiteSpace: multiline ? "pre-wrap" : undefined, ...style };
 
   const handleBlur = (e: React.FocusEvent<HTMLElement>) => {
     if (!editable) return;
-    const newVal = (e.currentTarget.textContent ?? "").trim();
+    const newVal = multiline
+      ? (e.currentTarget.innerText ?? "").trimEnd()
+      : (e.currentTarget.textContent ?? "").trim();
     if (newVal !== value) onSave(newVal);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     e.stopPropagation();
     if (e.key === "Escape") {
+      e.preventDefault();
+      (e.currentTarget as HTMLElement).blur();
+    }
+    if (e.key === "Enter" && !multiline) {
       e.preventDefault();
       (e.currentTarget as HTMLElement).blur();
     }
@@ -614,6 +623,7 @@ function SlideView({ topic, slide, slideIndex, total, pathKicker, editMode, onEd
           onSave={(v) => onEdit("body", v || null)}
           className="text-lg font-medium leading-relaxed max-w-4xl mb-4"
           style={{ color: "#1F1F1F" }}
+          multiline
         />
       )}
 
@@ -694,6 +704,7 @@ function SlideView({ topic, slide, slideIndex, total, pathKicker, editMode, onEd
             onSave={(v) => onEdit("quote", v || null)}
             className="text-xl font-semibold leading-snug italic"
             style={{ color: "#1F1F1F" }}
+            multiline
           />
           {(slide.quoteAuthor || editMode) && (
             <Editable
