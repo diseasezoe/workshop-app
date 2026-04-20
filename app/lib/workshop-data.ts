@@ -362,7 +362,7 @@ const bezpecPaths: TopicPath[] = [
       {
         kicker: "Access Control",
         title: "Každý endpoint musí vědět, kdo smí co",
-        body: "Typická díra ve vibecoded appce: ověří jen jestli je uživatel přihlášený, ne jestli má právo k TĚMHLE datům. User A si otevře URL user B a vidí jeho objednávky.",
+        body: "Typická díra ve vibecoded appce: kód ověří jen přihlášení, ale při dotazu do databáze nekontroluje, jestli ta data patří zrovna jemu. User A si otevře URL user B a vidí jeho objednávky.",
         bulletsDetailed: [
           { text: "Broken authorization", example: "User A si dá /api/invoice/42, kontrola ověří jen login. Ale faktura 42 patří user B." },
           { text: "Role confusion", example: "Běžný uživatel se dostane na admin endpoint, protože role-check chyběl." },
