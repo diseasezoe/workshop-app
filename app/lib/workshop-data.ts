@@ -161,12 +161,12 @@ const aiCeoPraxe: Slide[] = [
 
 const projektySlides: Slide[] = [
   {
-    kicker: "Thajsko, 14 dní",
-    title: "Co vzniklo za dva tejdny",
+    kicker: "Vibecodujeme od 17. února 2026",
+    title: "Co vzniklo za 63 dní",
     stats: [
-      { value: "7", label: "webů" },
-      { value: "2", label: "automatizace" },
-      { value: "1", label: "support bot" },
+      { value: "48", label: "projektů" },
+      { value: "11", label: "automatizací" },
+      { value: "63", label: "dní" },
       { value: "0", label: "řádků kódu" },
     ],
   },
@@ -231,11 +231,10 @@ const bezpecZakladySlides: Slide[] = [
   },
   {
     kicker: "Reálný dopad",
-    title: "Vercel incident, duben 2026 - stalo se mně",
-    body: "127 env proměnných bez označení 'sensitive' v mých projektech. Přesně ty, ke kterým měl útočník přístup.",
+    title: "Stalo se mně. Duben 2026.",
     screenshots: [
       { src: "/slides/vercel-incident-bulletin.png", caption: "Vercel Security Bulletin - duben 2026" },
-      { src: "/slides/vercel-incident-my-impact.png", caption: "Dopad na moje projekty" },
+      { src: "/slides/vercel-incident-my-impact.png", caption: "127 env vars bez 'sensitive' - přesně ty, ke kterým měl útočník přístup" },
     ],
     screenshotsStack: true,
   },

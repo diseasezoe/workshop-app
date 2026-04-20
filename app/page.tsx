@@ -430,7 +430,7 @@ function ScreenshotsRow({ shots, stack }: { shots: { src: string; caption: strin
   }, [isOpen, close, next, prev]);
 
   const isSingle = shots.length === 1;
-  const tileHeight = stack ? "22vh" : isSingle ? "50vh" : "38vh";
+  const tileHeight = stack ? "26vh" : isSingle ? "50vh" : "38vh";
 
   return (
     <>
@@ -637,7 +637,7 @@ function SlideView({ topic, slide, slideIndex, total, pathKicker, editMode, onEd
       )}
 
       {slide.bulletsDetailed && (
-        <ul className="space-y-4 max-w-5xl">
+        <ul className="space-y-2.5 max-w-5xl">
           {slide.bulletsDetailed.map((b, i) => (
             <li key={i} className="flex items-start gap-4">
               <span

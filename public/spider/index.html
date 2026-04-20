@@ -1,0 +1,242 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700;800&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body, .wrap { font-family: 'Nunito Sans', sans-serif; }
+.wrap { background: #FAF5EC; border-radius: 16px; padding: 0; overflow: hidden; }
+svg { display: block; }
+.cat-label { cursor: pointer; transition: opacity 0.2s; }
+.cat-label:hover { opacity: 0.75; }
+.detail-panel {
+  background: #FAF5EC;
+  border-top: 1px solid #D8D8D8;
+  padding: 16px 24px;
+  min-height: 64px;
+  font-family: 'Nunito Sans', sans-serif;
+}
+.detail-panel h3 { font-size: 15px; font-weight: 800; color: #D2452D; margin-bottom: 6px; letter-spacing: -0.2px; }
+.detail-panel .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.detail-panel .tag {
+  background: #F2F2F2;
+  border: 1px solid #D8D8D8;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #303030;
+  padding: 3px 10px;
+}
+.hint { font-size: 12px; color: #6D6D6D; font-family: 'Nunito Sans', sans-serif; }
+</style>
+
+<div class="wrap">
+<svg id="spider" width="100%" viewBox="0 0 680 680" role="img">
+  <title>AI security risks — spider diagram</title>
+  <desc>Radial diagram of 9 AI risk categories with their subcategories, using Forendors design system.</desc>
+
+  <rect width="680" height="680" fill="#FAF5EC"/>
+
+  <circle cx="340" cy="340" r="260" fill="none" stroke="#D8D8D8" stroke-width="0.5"/>
+  <circle cx="340" cy="340" r="180" fill="none" stroke="#D8D8D8" stroke-width="0.5"/>
+  <circle cx="340" cy="340" r="100" fill="none" stroke="#D8D8D8" stroke-width="0.5"/>
+  <circle cx="340" cy="340" r="50" fill="#D2452D" stroke="none"/>
+  <text x="340" y="336" text-anchor="middle" font-family="'Nunito Sans',sans-serif" font-size="10" font-weight="800" fill="#FAF5EC">AI</text>
+  <text x="340" y="349" text-anchor="middle" font-family="'Nunito Sans',sans-serif" font-size="10" font-weight="800" fill="#FAF5EC">Security</text>
+
+  <g id="cats"></g>
+  <g id="subcats"></g>
+</svg>
+
+<div class="detail-panel" id="detail">
+  <span class="hint">Klikni na kategorii pro zobrazení rizik</span>
+</div>
+</div>
+
+<script>
+const CX = 340, CY = 340;
+const R_INNER = 55, R_CAT = 105, R_CAT_OUT = 175, R_SUB = 245;
+
+const cats = [
+  {
+    id: 'prompt', label: 'Prompt\nInjection', color: '#D2452D',
+    subs: ['Instruction\nhijacking','Jailbreak\nprompts','Context\noverride','Hidden\npayloads','Data\nexfiltration','System prompt\nleakage','Malicious\ninstructions']
+  },
+  {
+    id: 'data', label: 'Data\nLeakage', color: '#303030',
+    subs: ['API key\nleaks','Sensitive\nexposure','Training data\nrecall','Memory\npersistence','Log\nvulnerabilities','Cross-session\nleaks','Unauthorized\naccess']
+  },
+  {
+    id: 'tool', label: 'Tool\nMisuse', color: '#303030',
+    subs: ['Command\ninjection','File\nmanipulation','Unsafe tool\ncalls','System\ncompromise','API abuse']
+  },
+  {
+    id: 'halluc', label: 'Model\nHallucination', color: '#303030',
+    subs: ['False\noutputs','Fabricated\ncitations','Incorrect\ndecisions','Logic\nflaws','Misinformation\nspread','Trust\nerosion']
+  },
+  {
+    id: 'access', label: 'Access\nControl', color: '#303030',
+    subs: ['Broken\nauthorization','Role\nconfusion','Permission\nmisalignment','Token\nmisuse','Identity\nspoofing','Session\nhijacking','Weak\nauthentication']
+  },
+  {
+    id: 'agent', label: 'Autonomous\nAgent', color: '#303030',
+    subs: ['Infinite\nloops','Goal\nmisalignment','Task\nescalation','Recursive\nactions','Resource\nexhaustion','Unchecked\nautonomy','Financial\ndamage']
+  },
+  {
+    id: 'supply', label: 'Supply\nChain', color: '#303030',
+    subs: ['Model\npoisoning','Dataset\ntampering','Library\nbackdoors','Dependency\nexploits','Plugin\nvulnerabilities','API\ncompromise','Third-party\ntools']
+  },
+  {
+    id: 'memory', label: 'Memory &\nContext', color: '#303030',
+    subs: ['Knowledge\ninjection','Retrieval\nbias','Memory\ncorruption','Persistent\nexploits','Context\npoisoning','Long-term\nmanipulation','Stored prompt\nattacks']
+  },
+  {
+    id: 'infra', label: 'Infrastructure\nRisks', color: '#303030',
+    subs: ['DDoS\nattacks','Network\ninterception','Database\nexposure','Server\nbreaches','Cloud\nmisconfig','Endpoint\ncompromise','Encryption\ngaps']
+  }
+];
+
+const N = cats.length;
+const svg = document.getElementById('cats');
+const svgSub = document.getElementById('subcats');
+const detail = document.getElementById('detail');
+
+let activeIdx = -1;
+
+function angle(i, total, offset = -Math.PI/2) {
+  return offset + (2 * Math.PI * i) / total;
+}
+
+function pt(cx, cy, r, a) {
+  return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+}
+
+cats.forEach((cat, i) => {
+  const a = angle(i, N);
+  const [lx, ly] = pt(CX, CY, R_CAT + 38, a);
+  const [cx2, cy2] = pt(CX, CY, R_CAT + 10, a);
+  const [ix, iy] = pt(CX, CY, R_INNER, a);
+
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  g.setAttribute('class', 'cat-label');
+  g.setAttribute('data-idx', i);
+
+  const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  line.setAttribute('x1', ix); line.setAttribute('y1', iy);
+  line.setAttribute('x2', cx2); line.setAttribute('y2', cy2);
+  line.setAttribute('stroke', '#D8D8D8'); line.setAttribute('stroke-width', '0.5');
+  g.appendChild(line);
+
+  const circ = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  circ.setAttribute('cx', cx2); circ.setAttribute('cy', cy2);
+  circ.setAttribute('r', '6'); circ.setAttribute('fill', '#D8D8D8');
+  circ.setAttribute('class', 'cat-dot');
+  g.appendChild(circ);
+
+  const lines = cat.label.split('\n');
+  const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  text.setAttribute('x', lx); text.setAttribute('y', ly - (lines.length - 1) * 7);
+  text.setAttribute('text-anchor', 'middle');
+  text.setAttribute('dominant-baseline', 'central');
+  text.setAttribute('font-family', "'Nunito Sans',sans-serif");
+  text.setAttribute('font-size', '10');
+  text.setAttribute('font-weight', '700');
+  text.setAttribute('fill', '#303030');
+  lines.forEach((l, li) => {
+    const ts = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+    ts.setAttribute('x', lx);
+    ts.setAttribute('dy', li === 0 ? '0' : '13');
+    ts.textContent = l;
+    text.appendChild(ts);
+  });
+  g.appendChild(text);
+
+  g.addEventListener('click', () => selectCat(i));
+  svg.appendChild(g);
+});
+
+function selectCat(idx) {
+  if (activeIdx === idx) {
+    activeIdx = -1;
+    renderSubs(-1);
+    detail.innerHTML = '<span class="hint">Klikni na kategorii pro zobrazení rizik</span>';
+    resetDots();
+    return;
+  }
+  activeIdx = idx;
+  renderSubs(idx);
+  highlightDot(idx);
+
+  const cat = cats[idx];
+  const subsClean = cat.subs.map(s => s.replace('\n', ' '));
+  detail.innerHTML = `<h3>${cat.label.replace('\n', ' ')}</h3><div class="tags">${subsClean.map(s => `<span class="tag">${s}</span>`).join('')}</div>`;
+}
+
+function resetDots() {
+  document.querySelectorAll('.cat-dot').forEach(d => {
+    d.setAttribute('fill', '#D8D8D8');
+    d.setAttribute('r', '6');
+  });
+  document.querySelectorAll('.cat-label text').forEach(t => t.setAttribute('fill', '#303030'));
+  svgSub.innerHTML = '';
+}
+
+function highlightDot(idx) {
+  resetDots();
+  const dots = document.querySelectorAll('.cat-dot');
+  const texts = document.querySelectorAll('.cat-label text');
+  if (dots[idx]) { dots[idx].setAttribute('fill', '#D2452D'); dots[idx].setAttribute('r', '8'); }
+  if (texts[idx]) texts[idx].setAttribute('fill', '#D2452D');
+}
+
+function renderSubs(idx) {
+  svgSub.innerHTML = '';
+  if (idx < 0) return;
+  const cat = cats[idx];
+  const catAngle = angle(idx, N);
+  const subCount = cat.subs.length;
+  const spread = Math.PI * 0.55;
+
+  cat.subs.forEach((sub, si) => {
+    const sa = catAngle - spread/2 + (spread * si / Math.max(subCount - 1, 1));
+    const [sx, sy] = pt(CX, CY, R_SUB, sa);
+    const [ox, oy] = pt(CX, CY, R_CAT_OUT + 5, sa);
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', ox); line.setAttribute('y1', oy);
+    line.setAttribute('x2', sx); line.setAttribute('y2', sy);
+    line.setAttribute('stroke', '#D2452D'); line.setAttribute('stroke-width', '0.5');
+    line.setAttribute('opacity', '0.4');
+    svgSub.appendChild(line);
+
+    const circ = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circ.setAttribute('cx', sx); circ.setAttribute('cy', sy);
+    circ.setAttribute('r', '3'); circ.setAttribute('fill', '#D2452D');
+    circ.setAttribute('opacity', '0.7');
+    svgSub.appendChild(circ);
+
+    const lines = sub.split('\n');
+    const dx = sx - CX, dy = sy - CY;
+    const dist = Math.sqrt(dx*dx+dy*dy);
+    const nx = dx/dist, ny = dy/dist;
+    const tx = sx + nx*2, ty = sy + ny*2;
+
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    const anchor = Math.abs(nx) < 0.15 ? 'middle' : (nx > 0 ? 'start' : 'end');
+    text.setAttribute('x', tx + (anchor === 'start' ? 6 : anchor === 'end' ? -6 : 0));
+    text.setAttribute('y', ty + (ny > 0.3 ? 4 : ny < -0.3 ? -4 : 0));
+    text.setAttribute('text-anchor', anchor);
+    text.setAttribute('dominant-baseline', 'central');
+    text.setAttribute('font-family', "'Nunito Sans',sans-serif");
+    text.setAttribute('font-size', '8.5');
+    text.setAttribute('font-weight', '400');
+    text.setAttribute('fill', '#1F1F1F');
+    lines.forEach((l, li) => {
+      const ts = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+      ts.setAttribute('x', text.getAttribute('x'));
+      ts.setAttribute('dy', li === 0 ? '0' : '11');
+      ts.textContent = l;
+      text.appendChild(ts);
+    });
+    svgSub.appendChild(text);
+  });
+}
+</script>
