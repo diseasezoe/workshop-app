@@ -1,57 +1,67 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #f7f7f9;
-  --bg-secondary: #ffffff;
-  --bg-card: #ffffff;
-  --bg-card-hover: #fafafa;
-  --border: #e8e8ec;
-  --text-primary: #1a1a2e;
-  --text-secondary: #555555;
-  --text-muted: #6b7280;
-  --accent-red: #E85B5B;
-  --accent-red-light: #fef2f2;
-  --accent-blue: #3b82f6;
-  --accent-blue-light: #eff6ff;
-  --accent-green: #10b981;
-  --accent-green-light: #ecfdf5;
-  --accent-orange: #f59e0b;
-  --accent-orange-light: #fffbeb;
-  --accent-purple: #8b5cf6;
-  --accent-purple-light: #f5f3ff;
-  --accent-pink: #ec4899;
-  --accent-pink-light: #fdf2f8;
+  /* Forendors palette */
+  --bg-primary: #ffffff;
+  --bg-section: #f0f0f6;
+  --bg-card-cool: #ebf2f8;
+  --border: #d0d0d9;
+  --border-strong: #85859c;
 
-  /* Topic card pastel backgrounds */
-  --card-ai-ceo: #E8F4FD;
-  --card-ai-ceo-border: #B8DCEF;
-  --card-projekty: #E6F7F0;
-  --card-projekty-border: #A7E8CC;
-  --card-bezpecnost: #FEF0F0;
-  --card-bezpecnost-border: #F5B8B8;
+  --text-primary: #1f1f1f;
+  --text-secondary: #252526;
+  --text-muted: #a7acc1;
+
+  --brand-red: #d42e4d;
+  --brand-red-dark: #bf103f;
+  --brand-red-accent: #ed4355;
+
+  --accent-mint: #5cc19f;
+  --accent-mint-dark: #1b9174;
+  --accent-yellow: #fcb623;
+  --accent-purple: #57155b;
+  --accent-blue: #0038ff;
+
+  /* Topic tiles (solid pastel Forendors-style) */
+  --topic-red-bg: #fdecef;
+  --topic-red-border: #f5b8c3;
+  --topic-mint-bg: #e4f5ee;
+  --topic-mint-border: #a7e0cb;
+  --topic-yellow-bg: #fef3d9;
+  --topic-yellow-border: #f8dc9a;
+  --topic-purple-bg: #efe4f0;
+  --topic-purple-border: #c9a7cb;
+  --topic-blue-bg: #e4ecfa;
+  --topic-blue-border: #a7b8e0;
 }
 
 @theme inline {
   --color-bg-primary: var(--bg-primary);
-  --color-bg-secondary: var(--bg-secondary);
-  --color-bg-card: var(--bg-card);
-  --color-bg-card-hover: var(--bg-card-hover);
+  --color-bg-section: var(--bg-section);
+  --color-bg-card-cool: var(--bg-card-cool);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
-  --color-accent-red: var(--accent-red);
-  --color-accent-blue: var(--accent-blue);
-  --color-accent-green: var(--accent-green);
-  --color-accent-orange: var(--accent-orange);
+  --color-brand-red: var(--brand-red);
+  --color-brand-red-dark: var(--brand-red-dark);
+  --color-accent-mint: var(--accent-mint);
+  --color-accent-mint-dark: var(--accent-mint-dark);
+  --color-accent-yellow: var(--accent-yellow);
   --color-accent-purple: var(--accent-purple);
+  --color-accent-blue: var(--accent-blue);
 }
 
 body {
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-feature-settings: "cv11", "ss01";
+  letter-spacing: -0.011em;
 }
+
+html, body { max-width: 100vw; overflow-x: hidden; }
 
 @keyframes pulse-glow {
   0%, 100% { opacity: 0.4; }
@@ -68,11 +78,6 @@ body {
   to { transform: scale(1); opacity: 1; }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-
 .animate-slide-up {
   animation: slide-up 0.5s ease-out forwards;
 }
@@ -81,18 +86,20 @@ body {
   animation: count-up 0.3s ease-out forwards;
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
 .vote-bar {
   transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card-shadow {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+/* Forendors — flat design, no shadows, rely on borders */
+.card-flat {
+  border: 1px solid var(--border);
+  background: var(--bg-primary);
 }
 
-.card-shadow-hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.04);
+.pill {
+  border-radius: 100px;
+}
+
+.tracking-display {
+  letter-spacing: -0.025em;
 }

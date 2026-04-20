@@ -33,7 +33,65 @@ export async function castVote(sessionId: string, topicId: string) {
 export async function resetVotes(sessionId: string) {
   const db = getDb();
   const votesRef = ref(db, `sessions/${sessionId}/votes`);
+  const nonceRef = ref(db, `sessions/${sessionId}/resetNonce`);
   await set(votesRef, null);
+  await set(nonceRef, Date.now());
+}
+
+export function useResetNonce(sessionId: string) {
+  const [nonce, setNonce] = useState<number>(0);
+
+  useEffect(() => {
+    const db = getDb();
+    const nonceRef = ref(db, `sessions/${sessionId}/resetNonce`);
+    const unsubscribe = onValue(nonceRef, (snapshot) => {
+      setNonce(snapshot.val() || 0);
+    });
+    return () => unsubscribe();
+  }, [sessionId]);
+
+  return nonce;
+}
+
+export type SlideOverride = Partial<{
+  title: string;
+  body: string;
+  kicker: string;
+  quote: string;
+  quoteAuthor: string;
+  bullets: string[];
+}>;
+
+export type SlideOverrideMap = Record<string, SlideOverride>;
+
+export function useSlideOverrides(sessionId: string) {
+  const [overrides, setOverrides] = useState<SlideOverrideMap>({});
+
+  useEffect(() => {
+    const db = getDb();
+    const r = ref(db, `sessions/${sessionId}/slideOverrides`);
+    const unsub = onValue(r, (snap) => {
+      setOverrides(snap.val() || {});
+    });
+    return () => unsub();
+  }, [sessionId]);
+
+  return overrides;
+}
+
+export async function saveSlideOverrideField(
+  sessionId: string,
+  slideKey: string,
+  field: keyof SlideOverride,
+  value: string | string[] | null
+) {
+  const db = getDb();
+  const r = ref(db, `sessions/${sessionId}/slideOverrides/${slideKey}/${field}`);
+  if (value === null || value === "") {
+    await set(r, null);
+  } else {
+    await set(r, value);
+  }
 }
 
 export function useCurrentLevel(sessionId: string) {
