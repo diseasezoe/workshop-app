@@ -2,30 +2,25 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function proxy(req: NextRequest) {
-  if (req.nextUrl.pathname.startsWith("/vote")) {
+  const { pathname } = req.nextUrl;
+
+  // Vždy povoleno bez hesla
+  if (
+    pathname.startsWith("/vote") ||
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/api/auth")
+  ) {
     return NextResponse.next();
   }
 
-  const authHeader = req.headers.get("authorization");
-  if (authHeader?.startsWith("Basic ")) {
-    const decoded = atob(authHeader.slice(6));
-    const colonIdx = decoded.indexOf(":");
-    const user = decoded.slice(0, colonIdx);
-    const pass = decoded.slice(colonIdx + 1);
-    if (
-      user === (process.env.BASIC_AUTH_USER ?? "") &&
-      pass === (process.env.BASIC_AUTH_PASS ?? "")
-    ) {
-      return NextResponse.next();
-    }
+  const cookie = req.cookies.get("ws-auth");
+  const correct = process.env.BASIC_AUTH_PASS ?? "";
+
+  if (correct && cookie?.value === correct) {
+    return NextResponse.next();
   }
 
-  return new NextResponse("Přístup zamítnut", {
-    status: 401,
-    headers: {
-      "WWW-Authenticate": 'Basic realm="Workshop"',
-    },
-  });
+  return NextResponse.redirect(new URL("/login", req.url));
 }
 
 export const config = {
