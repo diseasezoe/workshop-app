@@ -394,7 +394,7 @@ function CodeCompare({ bad, good }: { bad: CodeBlock; good: CodeBlock }) {
   );
 }
 
-function ScreenshotsRow({ shots }: { shots: { src: string; caption: string }[] }) {
+function ScreenshotsRow({ shots, stack }: { shots: { src: string; caption: string }[]; stack?: boolean }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const isOpen = openIndex !== null;
 
@@ -430,13 +430,13 @@ function ScreenshotsRow({ shots }: { shots: { src: string; caption: string }[] }
   }, [isOpen, close, next, prev]);
 
   const isSingle = shots.length === 1;
-  const tileHeight = isSingle ? "50vh" : "38vh";
+  const tileHeight = stack ? "22vh" : isSingle ? "50vh" : "38vh";
 
   return (
     <>
       <div
-        className="grid gap-4 mt-2"
-        style={{ gridTemplateColumns: `repeat(${shots.length}, minmax(0, 1fr))` }}
+        className="grid gap-3 mt-2"
+        style={{ gridTemplateColumns: stack ? "1fr" : `repeat(${shots.length}, minmax(0, 1fr))` }}
       >
         {shots.map((s, i) => (
           <button
@@ -776,7 +776,7 @@ function SlideView({ topic, slide, slideIndex, total, pathKicker, editMode, onEd
 
       {slide.codeCompare && <CodeCompare bad={slide.codeCompare.bad} good={slide.codeCompare.good} />}
 
-      {slide.screenshots && <ScreenshotsRow shots={slide.screenshots} />}
+      {slide.screenshots && <ScreenshotsRow shots={slide.screenshots} stack={slide.screenshotsStack} />}
     </div>
   );
 }

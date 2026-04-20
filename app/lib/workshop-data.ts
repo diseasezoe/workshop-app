@@ -37,6 +37,7 @@ export interface Slide {
   embed?: string;
   workflow?: Workflow;
   screenshots?: { src: string; caption: string }[];
+  screenshotsStack?: boolean;
   trifecta?: boolean;
   codeCompare?: { bad: CodeBlock; good: CodeBlock };
 }
@@ -227,6 +228,16 @@ const bezpecZakladySlides: Slide[] = [
     body: "CLAUDE.md (soubor s pravidly, který AI čte na začátku každé konverzace) jasně říká: žádné natvrdo napsané emaily, ID ani config values. Při rychlém buildování jsem dávala přednost rychlosti. Není to omluva. Uložila jsem si to do paměti, aby se to neopakovalo.",
     image: "/slides/bezpec-claude-opraveno.png",
     imageCaption: "Reálná session: Claude to zaloguje, opraví a shrne, proč k tomu došlo.",
+  },
+  {
+    kicker: "Reálný dopad",
+    title: "Vercel incident, duben 2026 - stalo se mně",
+    body: "127 env proměnných bez označení 'sensitive' v mých projektech. Přesně ty, ke kterým měl útočník přístup.",
+    screenshots: [
+      { src: "/slides/vercel-incident-bulletin.png", caption: "Vercel Security Bulletin - duben 2026" },
+      { src: "/slides/vercel-incident-my-impact.png", caption: "Dopad na moje projekty" },
+    ],
+    screenshotsStack: true,
   },
   {
     kicker: "Dobrý kolega",
