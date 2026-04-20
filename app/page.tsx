@@ -246,8 +246,11 @@ function Editable({
   const ref = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (ref.current && ref.current.textContent !== value) {
-      ref.current.textContent = value;
+    const el = ref.current;
+    if (!el) return;
+    if (document.activeElement === el) return;
+    if (el.textContent !== value) {
+      el.textContent = value;
     }
   }, [value]);
 
