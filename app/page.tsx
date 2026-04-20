@@ -800,6 +800,7 @@ export default function PresenterDashboard() {
   const currentLevel = useCurrentLevel(SESSION_ID);
   const overrides = useSlideOverrides(SESSION_ID);
   const [voteUrl, setVoteUrl] = useState("");
+  const [showEnding, setShowEnding] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const [selectedPath, setSelectedPath] = useState<TopicPath | null>(null);
   const [slideIndex, setSlideIndex] = useState(0);
@@ -990,6 +991,17 @@ export default function PresenterDashboard() {
             </button>
           )}
           <button
+            onClick={() => setShowEnding((v) => !v)}
+            className="px-5 py-2.5 pill text-sm font-semibold transition-colors"
+            style={{
+              border: `1px solid ${showEnding ? "#D2452D" : "#D0D0D9"}`,
+              background: showEnding ? "#D2452D" : "#FFFFFF",
+              color: showEnding ? "#FFFFFF" : "#1F1F1F",
+            }}
+          >
+            Závěr
+          </button>
+          <button
             onClick={handleReset}
             className="px-5 py-2.5 pill text-sm font-semibold transition-colors hover:text-[#D42E4D]"
             style={{ border: "1px solid #D0D0D9", background: "#FFFFFF", color: "#1F1F1F" }}
@@ -1121,6 +1133,44 @@ export default function PresenterDashboard() {
           </div>
         </div>
       ) : null}
+
+      {showEnding && (
+        <div
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-10 animate-slide-up"
+          style={{ background: "#FAF5EC" }}
+        >
+          <div className="flex flex-col items-center gap-3 text-center">
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#D2452D" }}>
+              CzechCrunch Future 2026
+            </span>
+            <h1
+              className="text-6xl font-extrabold tracking-display leading-tight"
+              style={{ color: "#1F1F1F" }}
+            >
+              Děkujeme za pozornost
+            </h1>
+            <p className="text-2xl font-medium mt-2" style={{ color: "#6D6D6D" }}>
+              Let&#39;s stay in touch
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center gap-4">
+            <div
+              className="p-5"
+              style={{
+                background: "#FFFFFF",
+                border: "1px solid #D8D8D8",
+                borderRadius: "20px",
+              }}
+            >
+              <QRCodeSVG value="https://denisahrubesova.cz/rozcestnik" size={220} fgColor="#1F1F1F" />
+            </div>
+            <p className="text-sm font-semibold" style={{ color: "#6D6D6D" }}>
+              denisahrubesova.cz/rozcestnik
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
