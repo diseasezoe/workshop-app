@@ -362,12 +362,12 @@ const bezpecPaths: TopicPath[] = [
       {
         kicker: "Access Control",
         title: "Každý endpoint musí vědět, kdo smí co",
-        body: "Nejčastější díra ve vibecodingu: AI kontroluje jen jestli je uživatel přihlášený, ne jestli má právo k TĚMHLE datům. User A si otevře URL user B a vidí jeho objednávky.",
+        body: "Na co AI při generování API zapomíná: ověří jen jestli je uživatel přihlášený, ne jestli má právo k TĚMHLE datům. User A si otevře URL user B a vidí jeho objednávky.",
         bulletsDetailed: [
           { text: "Broken authorization", example: "User A si dá /api/invoice/42, kontrola ověří jen login. Ale faktura 42 patří user B." },
           { text: "Role confusion", example: "Běžný uživatel se dostane na admin endpoint, protože role-check chyběl." },
           { text: "Permission misalignment", example: "Role editor má omylem přístup ke smazání cizích účtů." },
-          { text: "Token misuse", example: "Starý nebo falešný JWT token projde, protože server neověřuje expiraci." },
+          { text: "Token misuse", example: "JWT = digitální průkaz identity. Starý nebo falešný projde, když server nekontroluje platnost a expiraci." },
           { text: "Session hijacking", example: "Útočník převezme přihlášenou relaci přes ukradený session cookie." },
           { text: "Weak authentication", example: "Žádná dvoufaktorová ochrana, slabé heslo, žádný rate limit na loginu." },
         ],
