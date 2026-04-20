@@ -14,7 +14,7 @@ export function proxy(req: NextRequest) {
   }
 
   const cookie = req.cookies.get("ws-auth");
-  const correct = process.env.BASIC_AUTH_PASS ?? "";
+  const correct = (process.env.BASIC_AUTH_PASS ?? "").trim();
 
   if (correct && cookie?.value === correct) {
     return NextResponse.next();
