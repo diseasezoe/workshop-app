@@ -1154,20 +1154,40 @@ export default function PresenterDashboard() {
             </p>
           </div>
 
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex items-center gap-12">
+            <div className="flex flex-col items-center gap-4">
+              <div
+                className="p-5"
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid #D8D8D8",
+                  borderRadius: "20px",
+                }}
+              >
+                <QRCodeSVG value="https://denisahrubesova.cz/rozcestnik" size={200} fgColor="#1F1F1F" />
+              </div>
+              <p className="text-sm font-semibold" style={{ color: "#6D6D6D" }}>
+                denisahrubesova.cz/rozcestnik
+              </p>
+            </div>
+
             <div
-              className="p-5"
               style={{
-                background: "#FFFFFF",
-                border: "1px solid #D8D8D8",
+                width: "260px",
+                height: "260px",
                 borderRadius: "20px",
+                overflow: "hidden",
+                border: "1px solid #D8D8D8",
+                flexShrink: 0,
               }}
             >
-              <QRCodeSVG value="https://denisahrubesova.cz/rozcestnik" size={220} fgColor="#1F1F1F" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/slides/team-photo.jpg"
+                alt="Tým"
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
+              />
             </div>
-            <p className="text-sm font-semibold" style={{ color: "#6D6D6D" }}>
-              denisahrubesova.cz/rozcestnik
-            </p>
           </div>
         </div>
       )}
