@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { castVote, useCurrentLevel, useResetNonce } from "../lib/use-votes";
+import { castVote, useResetNonce } from "../lib/use-votes";
 import { workshopTopics, Topic } from "../lib/workshop-data";
 
 const SESSION_ID = "future-2026";
@@ -63,26 +63,22 @@ function VoteButton({ topic, index, voted, disabled, onVote }: {
 }
 
 export default function VotePage() {
-  const currentLevel = useCurrentLevel(SESSION_ID);
   const resetNonce = useResetNonce(SESSION_ID);
   const [votedFor, setVotedFor] = useState<string | null>(null);
 
-  const storageKey = (level: string, nonce: number) =>
-    `vote-${SESSION_ID}-${level}-${nonce}`;
+  const storageKey = (nonce: number) => `vote-${SESSION_ID}-root-${nonce}`;
 
   useEffect(() => {
-    const stored = localStorage.getItem(storageKey(currentLevel, resetNonce));
+    const stored = localStorage.getItem(storageKey(resetNonce));
     setVotedFor(stored);
-  }, [currentLevel, resetNonce]);
+  }, [resetNonce]);
 
-  const activeTopic = currentLevel !== "root"
-    ? workshopTopics.find((t) => t.id === currentLevel)
-    : null;
+  const votedTopic = votedFor ? workshopTopics.find((t) => t.id === votedFor) : null;
 
   const handleVote = async (topicId: string) => {
     if (votedFor) return;
     setVotedFor(topicId);
-    localStorage.setItem(storageKey(currentLevel, resetNonce), topicId);
+    localStorage.setItem(storageKey(resetNonce), topicId);
     await castVote(SESSION_ID, topicId);
   };
 
@@ -104,75 +100,42 @@ export default function VotePage() {
       </header>
 
       <div className="flex-1 p-5 flex flex-col">
-        {activeTopic ? (
-          <div className="flex-1 flex flex-col items-center justify-center text-center gap-5">
-            <span
-              className="inline-block text-[10px] font-bold uppercase tracking-widest px-3 py-1 pill"
-              style={{
-                color: activeTopic.accent,
-                background: "#FFFFFF",
-                border: `1px solid ${activeTopic.accent}40`,
-              }}
-            >
-              Teď jede téma
-            </span>
-            <h2
-              className="text-3xl font-extrabold tracking-display leading-tight"
-              style={{ color: "#1F1F1F" }}
-            >
-              {activeTopic.title}
-            </h2>
-            <p className="text-sm leading-snug max-w-xs" style={{ color: "#85859C" }}>
-              {activeTopic.subtitle}
-            </p>
+        {votedFor ? (
+          <div className="flex-1 flex flex-col items-center justify-center text-center gap-4">
             <div
-              className="inline-flex items-center gap-2.5 px-5 py-3 pill mt-2"
-              style={{ border: "1px solid #D0D0D9", background: "#FFFFFF" }}
+              className="w-14 h-14 rounded-full flex items-center justify-center mb-2"
+              style={{ background: votedTopic?.accent || "#1B9174" }}
             >
-              <div
-                className="w-2 h-2 rounded-full"
-                style={{ background: "#1B9174", animation: "pulse-glow 2s infinite" }}
-              />
-              <span className="text-sm font-semibold" style={{ color: "#1F1F1F" }}>
-                Sleduj prezentaci na obrazovce
-              </span>
+              <svg className="w-7 h-7" fill="none" stroke="#FFFFFF" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
             </div>
+            <h2 className="text-3xl font-extrabold tracking-display" style={{ color: "#1F1F1F" }}>
+              Díky za hlas
+            </h2>
+            {votedTopic && (
+              <p className="text-sm font-medium" style={{ color: "#85859C" }}>
+                Hlasoval/a jsi pro: <span style={{ color: "#1F1F1F", fontWeight: 700 }}>{votedTopic.title}</span>
+              </p>
+            )}
           </div>
         ) : (
           <>
             <p className="text-sm mb-5 font-semibold" style={{ color: "#1F1F1F" }}>
-              {votedFor ? "Díky za hlas" : "Vyber téma, které tě zajímá"}
+              Vyber téma, které tě zajímá
             </p>
-
-            <div className="space-y-3 flex-1">
+            <div className="space-y-3">
               {workshopTopics.map((topic, i) => (
                 <VoteButton
                   key={topic.id}
                   topic={topic}
                   index={i}
-                  voted={votedFor === topic.id}
-                  disabled={!!votedFor && votedFor !== topic.id}
+                  voted={false}
+                  disabled={false}
                   onVote={() => handleVote(topic.id)}
                 />
               ))}
             </div>
-
-            {votedFor && (
-              <div className="mt-6 text-center">
-                <div
-                  className="inline-flex items-center gap-2.5 px-5 py-2.5 pill"
-                  style={{ border: "1px solid #D0D0D9", background: "#FFFFFF" }}
-                >
-                  <div
-                    className="w-2 h-2 rounded-full"
-                    style={{ background: "#1B9174", animation: "pulse-glow 2s infinite" }}
-                  />
-                  <span className="text-sm font-semibold" style={{ color: "#1F1F1F" }}>
-                    Sleduj výsledky na obrazovce
-                  </span>
-                </div>
-              </div>
-            )}
           </>
         )}
       </div>
