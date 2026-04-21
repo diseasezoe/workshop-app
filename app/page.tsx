@@ -1136,13 +1136,26 @@ export default function PresenterDashboard() {
 
       {showEnding && (
         <div
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center animate-slide-up overflow-hidden"
+          className="fixed inset-0 z-50 flex flex-col items-center animate-slide-up overflow-hidden"
           style={{ background: "#FAF5EC" }}
         >
+          {/* Title block */}
+          <div className="flex flex-col items-center gap-3 text-center pt-14 pb-6 px-8">
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#D2452D" }}>
+              CzechCrunch Future 2026
+            </span>
+            <h1
+              className="text-5xl font-extrabold tracking-display leading-tight"
+              style={{ color: "#1F1F1F" }}
+            >
+              Děkujeme za pozornost
+            </h1>
+          </div>
+
           {/* Horizontal blue marquee */}
           <div
-            className="absolute left-0 right-0 overflow-hidden py-5"
-            style={{ background: "#0038FF", top: "12%" }}
+            className="self-stretch overflow-hidden py-5"
+            style={{ background: "#0038FF" }}
           >
             <div className="marquee-track animate-marquee-left">
               {Array.from({ length: 2 }).map((_, dup) => (
@@ -1162,20 +1175,9 @@ export default function PresenterDashboard() {
             </div>
           </div>
 
-          {/* Center - QR is the hero */}
-          <div className="relative z-10 flex flex-col items-center gap-5 px-8 text-center">
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#D2452D" }}>
-              CzechCrunch Future 2026
-            </span>
-            <h1
-              className="text-5xl font-extrabold tracking-display leading-tight"
-              style={{ color: "#1F1F1F" }}
-            >
-              Děkujeme za pozornost
-            </h1>
-
-            <div className="relative mt-3">
-              {/* QR hero card */}
+          {/* QR hero + photo + URL */}
+          <div className="flex-1 flex flex-col items-center justify-center gap-6 px-8 pt-8 pb-14 text-center">
+            <div className="relative">
               <div
                 className="p-7 animate-qr-bob"
                 style={{
@@ -1185,17 +1187,17 @@ export default function PresenterDashboard() {
                   boxShadow: "12px 12px 0 0 #1F1F1F",
                 }}
               >
-                <QRCodeSVG value="https://denisahrubesova.cz/rozcestnik" size={340} fgColor="#1F1F1F" />
+                <QRCodeSVG value="https://denisahrubesova.cz/rozcestnik" size={300} fgColor="#1F1F1F" />
               </div>
 
               {/* Floating team photo */}
               <div
                 className="absolute animate-float-bob"
                 style={{
-                  width: "150px",
-                  height: "150px",
-                  right: "-95px",
-                  bottom: "-50px",
+                  width: "140px",
+                  height: "140px",
+                  right: "-85px",
+                  bottom: "-40px",
                   borderRadius: "50%",
                   overflow: "hidden",
                   border: "4px solid #1F1F1F",
