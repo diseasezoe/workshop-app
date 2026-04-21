@@ -310,6 +310,17 @@ const bezpecZakladySlides: Slide[] = [
     ],
   },
   {
+    kicker: "/ultrareview",
+    title: "Hloubkový review v cloudu, ne lokálně",
+    bulletsDetailed: [
+      { text: "Flotila agentů místo jednoho průchodu", example: "Claude Code spustí paralelně víc reviewerů, každý nález nezávisle ověří, až pak to reportuje." },
+      { text: "Vyšší signál, míň šumu", example: "Odfiltruje stylové nitpicky a halucinované bugy. Zůstanou jen ověřené, reálné problémy v kódu." },
+      { text: "Běží na pozadí v cloudu", example: "5-10 minut v Anthropic sandboxu. Já mezitím dělám jiné věci, terminál zůstane volný." },
+      { text: "Před mergem větších změn", example: "Nepoužívám na každý commit. Spustím před nasazením nebo před mergem větší featury." },
+      { text: "/ultrareview nebo /ultrareview 1234", example: "Review aktuální větve nebo konkrétního PR podle čísla. Pro/Max účet + Claude Code 2.1.86+." },
+    ],
+  },
+  {
     kicker: "Závěr",
     title: "Kód je levnej. Dobrej kód ne.",
     body: "AI vygeneruje stovky řádků za minutu. Jestli je to bezpečný, funkční a udržitelný kód? To pořád stojí lidský čas. Když to nereviewuješ, jsi jen poštovní schránka mezi AI a produkcí.",
