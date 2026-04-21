@@ -232,6 +232,21 @@ const projektySlides: Slide[] = [
     screenshotsSide: true,
   },
   {
+    kicker: "Rybíz production dashboard",
+    title: "Agregace a vizualizace dat",
+    bulletsDetailed: [
+      { text: "Tahání dat přes API", example: "SimpleShop, Ecomail, Meta Ads, Google Analytics a další. Jeden dashboard místo deseti záložek v prohlížeči." },
+      { text: "Data v kontextu", example: "Prodeje masterclassu vedle stavu kampaní a newsletterů. Vidím, co kterou vlnu objednávek spustilo." },
+      { text: "Hodnocení reklamních kreativ", example: "Score podle CTR, konverzí a revenue. Rovnou vidím, co funguje a co vypnout." },
+      { text: "Trendy", example: "Denní Spend vs. Revenue, ROAS, cost per purchase. Trend za období, ne jen čísla v tabulce." },
+    ],
+    screenshots: [
+      { src: "/slides/rybiz-dashboard-overview.png", caption: "Masterclass + prodeje ze SimpleShopu" },
+      { src: "/slides/rybiz-dashboard-meta.png", caption: "Meta Ads - Spend vs. Revenue, ROAS" },
+      { src: "/slides/rybiz-dashboard-kreativy.png", caption: "Hodnocení kreativ a placement breakdown" },
+    ],
+  },
+  {
     kicker: "Čtvrt milionu",
     title: "Součet za 14 dní",
     stats: [
