@@ -416,27 +416,6 @@ const bezpecPaths: TopicPath[] = [
     ],
   },
   {
-    id: "access-control",
-    kicker: "Access Control",
-    title: "Kdo smí co",
-    description: "Endpoint kontroluje jen že je uživatel přihlášený, ne že mu data patří.",
-    slides: [
-      {
-        kicker: "Access Control",
-        title: "Každý endpoint musí vědět, kdo smí co",
-        body: "Typická díra ve vibecoded appce: kód ověří jen přihlášení, ale při dotazu do databáze nekontroluje, jestli ta data patří zrovna jemu. User A si otevře URL user B a vidí jeho objednávky.",
-        bulletsDetailed: [
-          { text: "Broken authorization", example: "User A si dá /api/invoice/42, kontrola ověří jen login. Ale faktura 42 patří user B." },
-          { text: "Role confusion", example: "Běžný uživatel se dostane na admin endpoint, protože role-check chyběl." },
-          { text: "Permission misalignment", example: "Role editor má omylem přístup ke smazání cizích účtů." },
-          { text: "Token misuse", example: "JWT = digitální průkaz identity. Starý nebo falešný projde, když server nekontroluje platnost a expiraci." },
-          { text: "Session hijacking", example: "Útočník převezme přihlášenou relaci přes ukradený session cookie." },
-          { text: "Weak authentication", example: "Žádná dvoufaktorová ochrana, slabé heslo, žádný rate limit na loginu." },
-        ],
-      },
-    ],
-  },
-  {
     id: "agent",
     kicker: "Autonomous Agent",
     title: "AI dělá věci sama, ne vždy tak, jak má",
@@ -472,47 +451,6 @@ const bezpecPaths: TopicPath[] = [
           { text: "Library backdoor", example: "Open-source knihovna obsahuje zadní vrátka, která se aktivují po updatu." },
           { text: "Dependency exploit", example: "Zastaralý balíček se známou zranitelností zůstává v projektu i po auditu." },
           { text: "Third-party tool", example: "MCP od solo autora má přístup k tvému Rohlík heslu. Bez review nevíš, co dělá." },
-        ],
-      },
-    ],
-  },
-  {
-    id: "memory",
-    kicker: "Memory & Context",
-    title: "Otrávený dlouhodobý obsah",
-    description: "Vektorová databáze, historie konverzací, RAG. Vše je útočná plocha.",
-    slides: [
-      {
-        kicker: "Memory & Context",
-        title: "Paměť a kontext: dlouhodobá data, kterým AI věří",
-        body: "AI si pamatuje konverzace, čte dokumenty, tahá data z vektorové databáze (RAG). Útočník do té paměti vstříkne, co chce, a AI tomu věří i po restartu.",
-        bulletsDetailed: [
-          { text: "Knowledge injection", example: "Útočník přidá do RAG databáze falešná fakta. AI je dál prezentuje jako pravdu." },
-          { text: "Retrieval bias", example: "AI tahá nerelevantní nebo zaujaté informace, protože je má v paměti víc." },
-          { text: "Context poisoning", example: "V dlouhém kontextu (celý mail, PDF) je schovaná instrukce, kterou AI poslechne." },
-          { text: "Persistent exploit", example: "Škodlivý pokyn přežije restart a vrací se v další konverzaci." },
-          { text: "Stored prompt attack", example: "Útočník uloží škodlivý prompt do databáze, CMS, komentáře. AI ho pak přečte." },
-        ],
-      },
-    ],
-  },
-  {
-    id: "infra",
-    kicker: "Infrastructure",
-    title: "Klasika, která platí i pro AI appky",
-    description: "AI agenti běží na serverech, v cloudu. Všechny klasické útoky platí.",
-    slides: [
-      {
-        kicker: "Infrastructure Risks",
-        title: "AI appky běží v klasické infrastruktuře",
-        body: "Agent běží na serveru, volá API, píše do databáze. Všechny klasické útoky (DDoS, MITM, misconfig) platí dál. Rate limiting, šifrování, firewally, zálohy.",
-        bulletsDetailed: [
-          { text: "DDoS attack", example: "Záplava requestů shodí tvou AI službu. Uživatelé nic nedostanou." },
-          { text: "Network interception", example: "Man-in-the-middle na nešifrované komunikaci. Útočník čte vše, co posíláš." },
-          { text: "Database exposure", example: "Databáze otevřená do internetu bez autentizace. Klasika Supabase nebo MongoDB." },
-          { text: "Cloud misconfig", example: "S3 bucket public, IAM role se zbytečnými právy, otevřený CORS." },
-          { text: "Endpoint compromise", example: "Útočník získá přístup k API endpointu a používá ho jako odrazový můstek." },
-          { text: "Encryption gaps", example: "Citlivá data v databázi nezašifrovaná, slabé šifry u HTTPS." },
         ],
       },
     ],
