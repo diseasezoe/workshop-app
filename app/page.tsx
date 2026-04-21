@@ -442,7 +442,7 @@ function ScreenshotsRow({ shots, stack }: { shots: { src: string; caption: strin
   }, [isOpen, close, next, prev]);
 
   const isSingle = shots.length === 1;
-  const tileHeight = stack ? "26vh" : isSingle ? "50vh" : "38vh";
+  const tileHeight = stack ? "26vh" : isSingle ? "50vh" : shots.length >= 3 ? "30vh" : "38vh";
 
   return (
     <>
@@ -747,7 +747,10 @@ function SlideView({ topic, slide, slideIndex, total, pathKicker, editMode, onEd
       )}
 
       {slide.stats && (
-        <div className="grid grid-cols-4 gap-4 max-w-5xl mt-2">
+        <div
+          className="grid gap-4 max-w-5xl mt-2"
+          style={{ gridTemplateColumns: `repeat(${slide.stats.length}, minmax(0, 1fr))` }}
+        >
           {slide.stats.map((s, i) => (
             <div
               key={i}
