@@ -168,7 +168,6 @@ const projektySlides: Slide[] = [
       { value: "48", label: "projektů" },
       { value: "11", label: "automatizací" },
       { value: "63", label: "dní" },
-      { value: "0", label: "řádků kódu" },
     ],
   },
   {
