@@ -1150,6 +1150,9 @@ export default function PresenterDashboard() {
             >
               Děkujeme za pozornost
             </h1>
+            <p className="text-sm font-semibold tracking-wider mt-1" style={{ color: "#6D6D6D" }}>
+              Denisa Hrubešová <span style={{ color: "#D2452D" }}>&amp;</span> Matyáš Kapsa
+            </p>
           </div>
 
           {/* Horizontal blue marquee */}
