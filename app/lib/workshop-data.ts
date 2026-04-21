@@ -310,14 +310,12 @@ const bezpecZakladySlides: Slide[] = [
     ],
   },
   {
-    kicker: "/ultrareview",
-    title: "Hloubkový review v cloudu, ne lokálně",
-    bulletsDetailed: [
-      { text: "Flotila agentů místo jednoho průchodu", example: "Claude Code spustí paralelně víc reviewerů, každý nález nezávisle ověří, až pak to reportuje." },
-      { text: "Vyšší signál, míň šumu", example: "Odfiltruje stylové nitpicky a halucinované bugy. Zůstanou jen ověřené, reálné problémy v kódu." },
-      { text: "Běží na pozadí v cloudu", example: "5-10 minut v Anthropic sandboxu. Já mezitím dělám jiné věci, terminál zůstane volný." },
-      { text: "Před mergem větších změn", example: "Nepoužívám na každý commit. Spustím před nasazením nebo před mergem větší featury." },
-      { text: "/ultrareview nebo /ultrareview 1234", example: "Review aktuální větve nebo konkrétního PR podle čísla. Pro/Max účet + Claude Code 2.1.86+." },
+    title: "/ultrareview",
+    bullets: [
+      "Flotila agentů v cloudu, ne jeden lokální průchod.",
+      "Každý nález nezávisle ověřený, žádné halucinace.",
+      "Běží na pozadí 5-10 minut, terminál zůstane volný.",
+      "Pouštím před mergem větších změn.",
     ],
   },
   {
