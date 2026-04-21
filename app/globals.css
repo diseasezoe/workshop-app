@@ -78,12 +78,54 @@ html, body { max-width: 100vw; overflow-x: hidden; }
   to { transform: scale(1); opacity: 1; }
 }
 
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes float-bob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-10px) rotate(3deg); }
+}
+
+@keyframes qr-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
 .animate-slide-up {
   animation: slide-up 0.5s ease-out forwards;
 }
 
 .animate-count {
   animation: count-up 0.3s ease-out forwards;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.animate-marquee-left {
+  animation: marquee-left 28s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 34s linear infinite;
+}
+
+.animate-float-bob {
+  animation: float-bob 6s ease-in-out infinite;
+}
+
+.animate-qr-bob {
+  animation: qr-bob 4s ease-in-out infinite;
 }
 
 .vote-bar {

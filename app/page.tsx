@@ -1136,58 +1136,120 @@ export default function PresenterDashboard() {
 
       {showEnding && (
         <div
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-10 animate-slide-up"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center animate-slide-up overflow-hidden"
           style={{ background: "#FAF5EC" }}
         >
-          <div className="flex flex-col items-center gap-3 text-center">
+          {/* Top marquee - red */}
+          <div
+            className="absolute top-8 overflow-hidden py-4"
+            style={{
+              background: "#D2452D",
+              transform: "rotate(-2deg)",
+              left: "-4%",
+              right: "-4%",
+              width: "108%",
+            }}
+          >
+            <div className="marquee-track animate-marquee-left">
+              {Array.from({ length: 2 }).map((_, dup) => (
+                <div
+                  key={dup}
+                  className="flex items-center gap-10 pr-10 text-5xl font-extrabold tracking-display whitespace-nowrap"
+                  style={{ color: "#FAF5EC" }}
+                >
+                  {Array.from({ length: 8 }).map((_, i) => (
+                    <span key={i} className="flex items-center gap-10">
+                      <span>Let&#39;s stay in touch</span>
+                      <span aria-hidden>✦</span>
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom marquee - dark */}
+          <div
+            className="absolute bottom-8 overflow-hidden py-4"
+            style={{
+              background: "#1F1F1F",
+              transform: "rotate(2deg)",
+              left: "-4%",
+              right: "-4%",
+              width: "108%",
+            }}
+          >
+            <div className="marquee-track animate-marquee-right">
+              {Array.from({ length: 2 }).map((_, dup) => (
+                <div
+                  key={dup}
+                  className="flex items-center gap-10 pr-10 text-5xl font-extrabold tracking-display whitespace-nowrap"
+                  style={{ color: "#FAF5EC" }}
+                >
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <span key={i} className="flex items-center gap-10">
+                      <span>denisahrubesova.cz/rozcestnik</span>
+                      <span aria-hidden>●</span>
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Center - QR is the hero */}
+          <div className="relative z-10 flex flex-col items-center gap-5 px-8 text-center">
             <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#D2452D" }}>
               CzechCrunch Future 2026
             </span>
             <h1
-              className="text-6xl font-extrabold tracking-display leading-tight"
+              className="text-5xl font-extrabold tracking-display leading-tight"
               style={{ color: "#1F1F1F" }}
             >
               Děkujeme za pozornost
             </h1>
-            <p className="text-2xl font-medium mt-2" style={{ color: "#6D6D6D" }}>
-              Let&#39;s stay in touch
-            </p>
-          </div>
 
-          <div className="flex items-center gap-12">
-            <div className="flex flex-col items-center gap-4">
+            <div className="relative mt-3">
+              {/* QR hero card */}
               <div
-                className="p-5"
+                className="p-7 animate-qr-bob"
                 style={{
                   background: "#FFFFFF",
-                  border: "1px solid #D8D8D8",
-                  borderRadius: "20px",
+                  border: "3px solid #1F1F1F",
+                  borderRadius: "28px",
+                  boxShadow: "12px 12px 0 0 #1F1F1F",
                 }}
               >
-                <QRCodeSVG value="https://denisahrubesova.cz/rozcestnik" size={200} fgColor="#1F1F1F" />
+                <QRCodeSVG value="https://denisahrubesova.cz/rozcestnik" size={340} fgColor="#1F1F1F" />
               </div>
-              <p className="text-sm font-semibold" style={{ color: "#6D6D6D" }}>
-                denisahrubesova.cz/rozcestnik
-              </p>
+
+              {/* Floating team photo */}
+              <div
+                className="absolute animate-float-bob"
+                style={{
+                  width: "150px",
+                  height: "150px",
+                  right: "-95px",
+                  bottom: "-50px",
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                  border: "4px solid #1F1F1F",
+                  boxShadow: "6px 6px 0 0 #D2452D",
+                  background: "#FFFFFF",
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/slides/team-photo.jpg"
+                  alt="Tým"
+                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }}
+                />
+              </div>
             </div>
 
-            <div
-              style={{
-                width: "260px",
-                height: "260px",
-                borderRadius: "20px",
-                overflow: "hidden",
-                border: "1px solid #D8D8D8",
-                flexShrink: 0,
-              }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/slides/team-photo.jpg"
-                alt="Tým"
-                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
-              />
-            </div>
+            <p className="text-sm font-semibold mt-5" style={{ color: "#1F1F1F" }}>
+              naskenuj a zůstaň v kontaktu
+            </p>
           </div>
         </div>
       )}
