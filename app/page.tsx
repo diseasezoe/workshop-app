@@ -1140,12 +1140,12 @@ export default function PresenterDashboard() {
           style={{ background: "#FAF5EC" }}
         >
           {/* Title block */}
-          <div className="flex flex-col items-center gap-2 sm:gap-3 text-center pt-8 sm:pt-14 pb-4 sm:pb-6 px-4 sm:px-8">
+          <div className="flex flex-col items-center gap-1 sm:gap-2 text-center pt-6 sm:pt-10 pb-4 px-4 sm:px-8">
             <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest" style={{ color: "#D2452D" }}>
               CzechCrunch Future 2026
             </span>
             <h1
-              className="text-3xl sm:text-5xl font-extrabold tracking-display leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-display leading-tight"
               style={{ color: "#1F1F1F" }}
             >
               Děkujeme za pozornost
@@ -1157,18 +1157,21 @@ export default function PresenterDashboard() {
 
           {/* Horizontal blue marquee */}
           <div
-            className="self-stretch overflow-hidden"
-            style={{ background: "#0038FF" }}
+            className="self-stretch overflow-hidden flex items-center"
+            style={{
+              background: "#0038FF",
+              minHeight: "clamp(56px, 9vw, 84px)",
+            }}
           >
-            <div className="marquee-track animate-marquee-left py-4 sm:py-5">
+            <div className="marquee-track animate-marquee-left">
               {Array.from({ length: 2 }).map((_, dup) => (
                 <div
                   key={dup}
                   className="flex items-center gap-6 sm:gap-10 pr-6 sm:pr-10 font-extrabold tracking-display whitespace-nowrap"
                   style={{
                     color: "#FAF5EC",
-                    fontSize: "clamp(24px, 5vw, 44px)",
-                    lineHeight: 1.2,
+                    fontSize: "clamp(22px, 4.2vw, 38px)",
+                    lineHeight: 1,
                   }}
                 >
                   {Array.from({ length: 8 }).map((_, i) => (
@@ -1183,35 +1186,35 @@ export default function PresenterDashboard() {
           </div>
 
           {/* QR hero + photo + URL */}
-          <div className="flex-1 flex flex-col items-center justify-center gap-4 sm:gap-6 px-4 sm:px-8 pt-6 sm:pt-8 pb-8 sm:pb-14 text-center w-full">
+          <div className="flex-1 flex flex-col items-center justify-center gap-3 sm:gap-5 px-4 sm:px-8 pt-4 sm:pt-6 pb-6 sm:pb-10 text-center w-full">
             <div className="relative">
               <div
-                className="p-4 sm:p-7 animate-qr-bob"
+                className="p-3 sm:p-5 animate-qr-bob"
                 style={{
                   background: "#FFFFFF",
                   border: "3px solid #1F1F1F",
-                  borderRadius: "28px",
+                  borderRadius: "24px",
                   boxShadow: "8px 8px 0 0 #1F1F1F",
                 }}
               >
                 <QRCodeSVG
                   value="https://denisahrubesova.cz/rozcestnik"
-                  size={260}
+                  size={240}
                   fgColor="#1F1F1F"
-                  className="w-[200px] h-[200px] sm:w-[260px] sm:h-[260px] md:w-[300px] md:h-[300px]"
+                  className="w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] md:w-[240px] md:h-[240px]"
                 />
               </div>
 
               {/* Floating team photo */}
               <div
-                className="absolute animate-float-bob w-[90px] h-[90px] sm:w-[120px] sm:h-[120px] md:w-[140px] md:h-[140px]"
+                className="absolute animate-float-bob w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[120px] md:h-[120px]"
                 style={{
-                  right: "-40px",
-                  bottom: "-30px",
+                  right: "-35px",
+                  bottom: "-25px",
                   borderRadius: "50%",
                   overflow: "hidden",
                   border: "4px solid #1F1F1F",
-                  boxShadow: "6px 6px 0 0 #D2452D",
+                  boxShadow: "5px 5px 0 0 #D2452D",
                   background: "#FFFFFF",
                 }}
               >
@@ -1224,13 +1227,13 @@ export default function PresenterDashboard() {
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-1 mt-4 sm:mt-6 max-w-full">
+            <div className="flex flex-col items-center gap-1 mt-3 sm:mt-4 max-w-full">
               <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest" style={{ color: "#6D6D6D" }}>
                 nebo napiš do prohlížeče
               </span>
               <a
                 href="https://denisahrubesova.cz/rozcestnik"
-                className="text-base sm:text-xl md:text-2xl font-extrabold tracking-display hover:opacity-70 transition-opacity break-all"
+                className="text-base sm:text-lg md:text-xl font-extrabold tracking-display hover:opacity-70 transition-opacity break-all"
                 style={{ color: "#1F1F1F", textDecoration: "underline", textDecorationThickness: "3px", textUnderlineOffset: "6px" }}
               >
                 denisahrubesova.cz/rozcestnik
