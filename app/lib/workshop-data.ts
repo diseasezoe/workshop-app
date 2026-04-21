@@ -306,7 +306,6 @@ const bezpecZakladySlides: Slide[] = [
       ".env* v .gitignore, ověřuju před každým commitem.",
       "Input validace i na serveru, ne jen v prohlížeči.",
       "Před ostrým nasazením pouštím security-review.",
-      "Kdo smí co - to rozeberu za chvíli v Access Control.",
     ],
   },
   {
