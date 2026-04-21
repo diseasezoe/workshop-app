@@ -315,7 +315,7 @@ const bezpecZakladySlides: Slide[] = [
       "Flotila agentů v cloudu, ne jeden lokální průchod.",
       "Každý nález nezávisle ověřený, žádné halucinace.",
       "Běží na pozadí 5-10 minut, terminál zůstane volný.",
-      "Pouštím před mergem větších změn.",
+      "Před mergem větších změn.",
     ],
   },
   {
