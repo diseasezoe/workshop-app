@@ -321,7 +321,6 @@ const bezpecZakladySlides: Slide[] = [
   {
     kicker: "Závěr",
     title: "Kód je levnej. Dobrej kód ne.",
-    body: "AI vygeneruje stovky řádků za minutu. Jestli je to bezpečný, funkční a udržitelný kód? To pořád stojí lidský čas. Když to nereviewuješ, jsi jen poštovní schránka mezi AI a produkcí.",
     quoteAuthor: "Simon Willison",
   },
 ];
