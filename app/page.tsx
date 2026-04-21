@@ -574,6 +574,8 @@ function SlideView({ topic, slide, slideIndex, total, pathKicker, editMode, onEd
   editMode: boolean;
   onEdit: (field: keyof SlideOverride, value: string | string[] | null) => void;
 }) {
+  const sideLayout = slide.screenshotsSide && slide.screenshots && slide.screenshots.length > 0;
+
   return (
     <div
       key={`${pathKicker}-${slideIndex}`}
@@ -609,6 +611,78 @@ function SlideView({ topic, slide, slideIndex, total, pathKicker, editMode, onEd
         </span>
       </div>
 
+      {sideLayout ? (
+        <div className="flex gap-10 items-start flex-1 min-h-0">
+          <div className="flex-1 min-w-0 flex flex-col justify-center">
+            <Editable
+              as="h2"
+              value={slide.title}
+              editable={editMode}
+              onSave={(v) => onEdit("title", v)}
+              className="text-4xl font-extrabold tracking-display leading-[1.05] mb-6"
+              style={{ color: "#1F1F1F" }}
+            />
+            {(slide.body || editMode) && (
+              <Editable
+                as="p"
+                value={slide.body || ""}
+                editable={editMode}
+                onSave={(v) => onEdit("body", v || null)}
+                className="text-lg font-medium leading-relaxed mb-4"
+                style={{ color: "#1F1F1F" }}
+                multiline
+              />
+            )}
+            {slide.bullets && (
+              <ul className="space-y-3">
+                {slide.bullets.map((b, i) => (
+                  <li key={i} className="flex items-start gap-3 text-lg font-medium" style={{ color: "#1F1F1F" }}>
+                    <span className="mt-2 w-2 h-2 shrink-0 rounded-full" style={{ background: topic.accent }} />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {slide.bulletsDetailed && (
+              <ul className="space-y-3">
+                {slide.bulletsDetailed.map((b, i) => (
+                  <li key={i} className="flex items-start gap-4">
+                    <span
+                      className="mt-1.5 w-6 h-6 shrink-0 rounded-full flex items-center justify-center text-xs font-bold tabular-nums"
+                      style={{ background: topic.accent, color: "#FFFFFF" }}
+                    >
+                      {i + 1}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-base font-bold leading-snug mb-0.5" style={{ color: "#1F1F1F" }}>
+                        {b.text}
+                      </div>
+                      <div className="text-sm leading-snug" style={{ color: "#85859C" }}>
+                        {b.example}
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          <div className="w-[38%] shrink-0 flex flex-col items-center self-center">
+            <Image
+              src={slide.screenshots![0].src}
+              alt={slide.screenshots![0].caption}
+              width={2400}
+              height={1600}
+              className="w-full h-auto max-h-[62vh] object-contain"
+            />
+            {slide.screenshots![0].caption && (
+              <p className="text-[11px] font-bold uppercase tracking-widest mt-3 text-center" style={{ color: "#85859C" }}>
+                {slide.screenshots![0].caption}
+              </p>
+            )}
+          </div>
+        </div>
+      ) : (
+      <>
       <Editable
         as="h2"
         value={slide.title}
@@ -791,6 +865,8 @@ function SlideView({ topic, slide, slideIndex, total, pathKicker, editMode, onEd
       {slide.codeCompare && <CodeCompare bad={slide.codeCompare.bad} good={slide.codeCompare.good} />}
 
       {slide.screenshots && <ScreenshotsRow shots={slide.screenshots} stack={slide.screenshotsStack} />}
+      </>
+      )}
     </div>
   );
 }

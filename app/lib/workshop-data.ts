@@ -38,6 +38,7 @@ export interface Slide {
   workflow?: Workflow;
   screenshots?: { src: string; caption: string }[];
   screenshotsStack?: boolean;
+  screenshotsSide?: boolean;
   trifecta?: boolean;
   codeCompare?: { bad: CodeBlock; good: CodeBlock };
 }
@@ -205,10 +206,16 @@ const projektySlides: Slide[] = [
   {
     kicker: "Slack -> fakturační systém",
     title: "Fakturace podcast studií přes Slack",
-    body: "Aplikace ve Slacku: po natáčení technik vyplní klienta, datum, službu, cenu a extra položky (harddisk, Google Drive). Návrh faktury se sám vytvoří ve fakturačním systému. Na konci měsíce Týnka (zatím ještě ona) jen odešle všechny faktury najednou.",
+    bulletsDetailed: [
+      { text: "Aplikace přímo ve Slacku", example: "Žádné přihlašování do fakturačky, žádný další tool. Technik je ve Slacku tak jako tak." },
+      { text: "Technik vyplní po natáčení formulář", example: "Klient, datum, služba, cena bez DPH + extra položky (harddisk 3 000 Kč, Google Drive 500 Kč)." },
+      { text: "Návrh faktury vznikne automaticky", example: "Ve fakturačním systému se objeví koncept se všemi položkami. Bez ručního přepisování." },
+      { text: "Týnka na konci měsíce odešle všechny najednou", example: "Zatím to ještě dělá ruka, ale ze 3-5 minut na fakturu je pár sekund kontroly." },
+    ],
     screenshots: [
       { src: "/slides/fakturace-slack-modal.png", caption: "Formulář Evidence natáčení přímo ve Slacku" },
     ],
+    screenshotsSide: true,
   },
   {
     kicker: "Čtvrt milionu",
