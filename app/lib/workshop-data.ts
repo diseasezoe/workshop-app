@@ -223,7 +223,7 @@ const projektySlides: Slide[] = [
     bulletsDetailed: [
       { text: "CookieScript & spol. stojí stovky měsíčně", example: "Za každou doménu. Postavili jsme si vlastní a dali ji na GitHub jako open source." },
       { text: "Nasazení přes GTM, žádný zásah do kódu", example: "Jeden soubor, 4,5 kB gzipped. Custom HTML tag + GTM šablona pro konfiguraci - barvy, texty, policy URL." },
-      { text: "Google Consent Mode V2 + Meta Pixel", example: "GA4, Google Ads signály a fbq() queue, která drží volání do udělení souhlasu. Přístupné z klávesnice." },
+      { text: "Google Consent Mode V2", example: "GA4, Google Ads signály a fbq() queue pro Meta Pixel, která drží volání do udělení souhlasu." },
       { text: "Reuse na všech webech", example: "Jeden projekt, jedna konfigurace v GTM, funguje napříč našimi doménami." },
     ],
     screenshots: [
