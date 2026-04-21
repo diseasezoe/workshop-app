@@ -261,7 +261,7 @@ const projektySlides: Slide[] = [
     title: "Součet za 14 dní",
     stats: [
       { value: "242 000 Kč", label: "ušetřeno na webech" },
-      { value: "1,5 roku", label: "práce týmu hotovo za 15 min" },
+      { value: "1,5 roku", label: "práce týmu hotovo za zlomek času" },
       { value: "12-14 h", label: "denně u počítače" },
     ],
   },
