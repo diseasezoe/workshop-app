@@ -1154,15 +1154,15 @@ export default function PresenterDashboard() {
 
           {/* Horizontal blue marquee */}
           <div
-            className="self-stretch overflow-hidden py-5"
-            style={{ background: "#0038FF" }}
+            className="self-stretch overflow-hidden"
+            style={{ background: "#0038FF", paddingTop: "22px", paddingBottom: "22px" }}
           >
             <div className="marquee-track animate-marquee-left">
               {Array.from({ length: 2 }).map((_, dup) => (
                 <div
                   key={dup}
-                  className="flex items-center gap-10 pr-10 text-5xl font-extrabold tracking-display whitespace-nowrap"
-                  style={{ color: "#FAF5EC" }}
+                  className="flex items-center gap-10 pr-10 font-extrabold tracking-display whitespace-nowrap"
+                  style={{ color: "#FAF5EC", fontSize: "44px", lineHeight: 1 }}
                 >
                   {Array.from({ length: 8 }).map((_, i) => (
                     <span key={i} className="flex items-center gap-10">
