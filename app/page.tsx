@@ -1139,16 +1139,10 @@ export default function PresenterDashboard() {
           className="fixed inset-0 z-50 flex flex-col items-center justify-center animate-slide-up overflow-hidden"
           style={{ background: "#FAF5EC" }}
         >
-          {/* Top marquee - red */}
+          {/* Horizontal blue marquee */}
           <div
-            className="absolute top-8 overflow-hidden py-4"
-            style={{
-              background: "#D2452D",
-              transform: "rotate(-2deg)",
-              left: "-4%",
-              right: "-4%",
-              width: "108%",
-            }}
+            className="absolute left-0 right-0 overflow-hidden py-5"
+            style={{ background: "#0038FF", top: "12%" }}
           >
             <div className="marquee-track animate-marquee-left">
               {Array.from({ length: 2 }).map((_, dup) => (
@@ -1161,35 +1155,6 @@ export default function PresenterDashboard() {
                     <span key={i} className="flex items-center gap-10">
                       <span>Let&#39;s stay in touch</span>
                       <span aria-hidden>✦</span>
-                    </span>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Bottom marquee - dark */}
-          <div
-            className="absolute bottom-8 overflow-hidden py-4"
-            style={{
-              background: "#1F1F1F",
-              transform: "rotate(2deg)",
-              left: "-4%",
-              right: "-4%",
-              width: "108%",
-            }}
-          >
-            <div className="marquee-track animate-marquee-right">
-              {Array.from({ length: 2 }).map((_, dup) => (
-                <div
-                  key={dup}
-                  className="flex items-center gap-10 pr-10 text-5xl font-extrabold tracking-display whitespace-nowrap"
-                  style={{ color: "#FAF5EC" }}
-                >
-                  {Array.from({ length: 6 }).map((_, i) => (
-                    <span key={i} className="flex items-center gap-10">
-                      <span>denisahrubesova.cz/rozcestnik</span>
-                      <span aria-hidden>●</span>
                     </span>
                   ))}
                 </div>
@@ -1247,9 +1212,18 @@ export default function PresenterDashboard() {
               </div>
             </div>
 
-            <p className="text-sm font-semibold mt-5" style={{ color: "#1F1F1F" }}>
-              naskenuj a zůstaň v kontaktu
-            </p>
+            <div className="flex flex-col items-center gap-1 mt-6">
+              <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#6D6D6D" }}>
+                nebo napiš do prohlížeče
+              </span>
+              <a
+                href="https://denisahrubesova.cz/rozcestnik"
+                className="text-2xl font-extrabold tracking-display hover:opacity-70 transition-opacity"
+                style={{ color: "#1F1F1F", textDecoration: "underline", textDecorationThickness: "3px", textUnderlineOffset: "6px" }}
+              >
+                denisahrubesova.cz/rozcestnik
+              </a>
+            </div>
           </div>
         </div>
       )}
