@@ -579,7 +579,7 @@ function SlideView({ topic, slide, slideIndex, total, pathKicker, editMode, onEd
   return (
     <div
       key={`${pathKicker}-${slideIndex}`}
-      className="animate-slide-up flex-1 min-h-0 flex flex-col justify-center px-10 py-8 overflow-hidden"
+      className="animate-slide-up flex-1 min-h-0 flex flex-col justify-center px-10 py-10 overflow-hidden"
       style={{
         background: "#F0F0F6",
         border: "1px solid #D0D0D9",
