@@ -203,6 +203,11 @@ const projektySlides: Slide[] = [
     body: "Každá objednávka masterclass vstupenky kolegyni zabrala 3-5 minut ruční práce. Teď přijde notifikace do Slacku a automaticky vznikne obchodní případ v Raynetu. Běží samo.",
   },
   {
+    kicker: "Slack -> fakturační systém",
+    title: "Fakturace podcast studií přes Slack",
+    body: "Aplikace ve Slacku: po natáčení technik vyplní klienta, datum, službu, cenu a extra položky (harddisk, Google Drive). Návrh faktury se sám vytvoří ve fakturačním systému. Na konci měsíce Týnka (zatím ještě ona) jen odešle všechny faktury najednou.",
+  },
+  {
     kicker: "Čtvrt milionu",
     title: "Součet za 14 dní",
     stats: [
