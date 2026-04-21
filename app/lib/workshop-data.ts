@@ -246,6 +246,17 @@ const projektySlides: Slide[] = [
     ],
   },
   {
+    kicker: "Podcast pipeline",
+    title: "AI a postprodukce podcastů",
+    bulletsDetailed: [
+      { text: "Přepis lokálně", example: "MLX Whisper běží přímo na Macu. Žádný upload, žádné API, plný přepis včetně časování." },
+      { text: "Kapitoly, názvy, descriptions", example: "Z přepisu AI vygeneruje kapitoly s časy, návrhy titulků a descriptions pro YouTube i Spotify." },
+      { text: "Reels: výběr, střih, titulky", example: "AI vybere nejsilnější momenty, ffmpeg seřízne svisle 9:16 a vypálí titulky. Hotový reel bez ruční práce v editoru." },
+      { text: "Napojení na postprodukční SW", example: "DaVinci Resolve plugin a EDL timeline markery. Střihač otevře projekt a rovnou vidí kapitoly, střihy, poznámky." },
+      { text: "Thumbnaily, social posty, newsletter", example: "Ze stejného přepisu vznikne thumbnail brief, balík tweetů, LinkedIn post a draft newsletteru. Jedno natáčení, deset výstupů." },
+    ],
+  },
+  {
     kicker: "Čtvrt milionu",
     title: "Součet za 14 dní",
     stats: [
